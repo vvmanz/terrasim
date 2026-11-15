@@ -1,0 +1,21 @@
+# ruts — ruts at the Husky track width (wheels at y = ±0.285 m): two 5 cm deep furrows in LETE sand.
+# in_ruts — in the ruts; cross_ruts — leaving the ruts at 30°.
+# Run:    bash scripts/drive.sh --map ruts            (scenario 'in_ruts', the robots listed in robots:)
+#         bash scripts/drive.sh --map "ruts@*"         (all scenarios: in_ruts, cross_ruts)
+#         bash scripts/drive.sh --map ruts@cross_ruts --robot husky --engine harmonic --gui
+# Preview: python3 tools/maps.py preview ruts      Format: docs/en/MAPS.md
+world:
+  name: ruts
+  description: 5 cm ruts at the Husky track width
+  tags: [ruts, outdoor]
+  default_surface: sand_lete
+  bounds: {xmin: -5, xmax: 6, ymin: -3, ymax: 3}
+  resolution: 0.02
+  zones: []
+  relief:
+    - {type: trench, points: [[-6, 0.285], [7, 0.285]], width: 0.3, flat: 0.06, height: -0.05}
+    - {type: trench, points: [[-6, -0.285], [7, -0.285]], width: 0.3, flat: 0.06, height: -0.05}
+  robots: [husky, jackal]
+  scenarios:
+    in_ruts: {spawn: [-4, 0, 0], traj: 'line:L=9'}
+    cross_ruts: {spawn: [-2, -1.6, 30], traj: 'line:L=6'}

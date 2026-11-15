@@ -1,0 +1,30 @@
+# slope_lanes_15 — a 15° slope with lanes of six surfaces (2 m wide each): the same slope, different grip.
+# Scenario = lane; all lanes at once: --map "slope_lanes_15@*".
+# Run:    bash scripts/drive.sh --map slope_lanes_15            (scenario 'table', the robots listed in robots:)
+#         bash scripts/drive.sh --map "slope_lanes_15@*"         (all scenarios: table, gray, green, carpet, table_wet, sand_lete)
+#         bash scripts/drive.sh --map slope_lanes_15@sand_lete --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview slope_lanes_15      Format: docs/en/MAPS.md
+world:
+  name: slope_lanes_15
+  description: "15° slope, six lanes of different surfaces"
+  tags: [slope, surfaces]
+  default_surface: gray
+  bounds: {xmin: -6, xmax: 6, ymin: -6, ymax: 6}
+  resolution: 0.05
+  zones:
+    - {surface: table, type: rect, xmin: -6, xmax: 6, ymin: -6, ymax: -4}
+    - {surface: gray, type: rect, xmin: -6, xmax: 6, ymin: -4, ymax: -2}
+    - {surface: green, type: rect, xmin: -6, xmax: 6, ymin: -2, ymax: 0}
+    - {surface: carpet, type: rect, xmin: -6, xmax: 6, ymin: 0, ymax: 2}
+    - {surface: table_wet, type: rect, xmin: -6, xmax: 6, ymin: 2, ymax: 4}
+    - {surface: sand_lete, type: rect, xmin: -6, xmax: 6, ymin: 4, ymax: 6}
+  relief:
+    - {type: plane, slope_deg: 15, dir_deg: 0}
+  robots: [robotino, burger, jackal, husky]
+  scenarios:
+    table: {spawn: [-4.5, -5, 0], traj: 'line:L=9', note: up the table lane}
+    gray: {spawn: [-4.5, -3, 0], traj: 'line:L=9', note: up the gray lane}
+    green: {spawn: [-4.5, -1, 0], traj: 'line:L=9', note: up the green lane}
+    carpet: {spawn: [-4.5, 1, 0], traj: 'line:L=9', note: up the carpet lane}
+    table_wet: {spawn: [-4.5, 3, 0], traj: 'line:L=9', note: up the table_wet lane}
+    sand_lete: {spawn: [-4.5, 5, 0], traj: 'line:L=9', note: up the sand_lete lane}

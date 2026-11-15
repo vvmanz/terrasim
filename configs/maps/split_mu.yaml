@@ -1,0 +1,21 @@
+# split_mu — μ-split: dry table under the left side, wet table under the right (μ 1.0 / 0.35), swapped after x = 5.
+# Acceleration and braking with different grip on the two sides: drift, heading error.
+# Run:    bash scripts/drive.sh --map split_mu            (scenario 'straight', the robots listed in robots:)
+#         bash scripts/drive.sh --map "split_mu@*"         (all scenarios: straight, slalom)
+#         bash scripts/drive.sh --map split_mu@slalom --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview split_mu      Format: docs/en/MAPS.md
+world:
+  name: split_mu
+  description: Different grip under the two sides (dry / wet)
+  tags: [surfaces, indoor]
+  default_surface: table
+  bounds: {xmin: -2, xmax: 12, ymin: -3, ymax: 3}
+  resolution: 0.02
+  zones:
+    - {surface: table_wet, type: rect, xmin: -2, xmax: 5, ymin: -3, ymax: 0}
+    - {surface: table_wet, type: rect, xmin: 5, xmax: 12, ymin: 0, ymax: 3}
+  relief: []
+  robots: [jackal, husky, robotino, burger, pioneer]
+  scenarios:
+    straight: {spawn: [-1, 0, 0], traj: 'line:L=12'}
+    slalom: {spawn: [-1, 0, 0], traj: 'slalom:L=11,A=0.8,n=2'}

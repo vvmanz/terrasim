@@ -1,0 +1,22 @@
+# slope_15 — an inclined plane of 15° over the whole map (uphill along +x), gray rubber floor.
+# Change the surface without editing the file: --map-set default_surface=sand_lete; the angle: --map-set relief.0.slope_deg=12.
+# Run:    bash scripts/drive.sh --map slope_15            (scenario 'up', the robots listed in robots:)
+#         bash scripts/drive.sh --map "slope_15@*"         (all scenarios: up, down, across, circle)
+#         bash scripts/drive.sh --map slope_15@circle --robot burger --engine harmonic --gui
+# Preview: python3 tools/maps.py preview slope_15      Format: docs/en/MAPS.md
+world:
+  name: slope_15
+  description: "Inclined plane of 15° over the whole map, uphill along +x"
+  tags: [slope]
+  default_surface: gray
+  bounds: {xmin: -6, xmax: 6, ymin: -6, ymax: 6}
+  resolution: 0.05
+  zones: []
+  relief:
+    - {type: plane, slope_deg: 15, dir_deg: 0}   # height 0 at the origin
+  robots: [burger, waffle, robotino, youbot, pioneer, jackal, husky, rover]
+  scenarios:
+    up: {spawn: [-4.5, 0, 0], traj: 'line:L=8', note: up the line of steepest slope}
+    down: {spawn: [4.5, 0, 180], traj: 'line:L=8', note: downhill}
+    across: {spawn: [0, -4.5, 90], traj: 'line:L=8', note: 'across the slope: roll, sliding sideways'}
+    circle: {spawn: [0, -2.5, 0], traj: 'circle:R=2.5', note: 'circle: every heading relative to the slope'}

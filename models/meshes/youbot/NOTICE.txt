@@ -1,0 +1,4 @@
+KUKA youBot meshes: base, plate, arm0-arm5, palm, finger, mecanum_left/right.
+Source: youbot_description (https://github.com/youbot/youbot_description), KUKA youBot / Locomotec.
+Licence: GPLv3, as declared in the package.xml of youbot_description. These files are distributed unmodified,
+as separate data files loaded by Gazebo at run time; they are not covered by the MIT licence of terrasim.

@@ -1,0 +1,82 @@
+{
+ "_doc": "Example robot file: a two-wheel differential robot with a rear ball caster (made-up numbers, a 6 kg indoor robot). Run: bash scripts/drive.sh --robot examples/robots/my_diffbot.json --traj circle:R=1. Every key: docs/en/ROBOTS.md.",
+ "mass": 6.0,
+ "com": [
+  -0.03,
+  0.0,
+  0.08
+ ],
+ "I": [
+  0.05,
+  0.07,
+  0.09
+ ],
+ "Jw": 0.004,
+ "size": [
+  0.34,
+  0.3,
+  0.12
+ ],
+ "body_off": [
+  -0.04,
+  0.0,
+  0.09
+ ],
+ "wheel_mass": 0.3,
+ "drive": [
+  "diff"
+ ],
+ "encoder_ticks": 1024,
+ "speed": 0.4,
+ "accel": 0.6,
+ "v_max": 0.8,
+ "w_max": 3.0,
+ "map_size": 4.0,
+ "map_res": 0.02,
+ "wheels": [
+  {
+   "label": "L",
+   "x": 0.0,
+   "y": 0.16,
+   "r": 0.06,
+   "b": 0.03,
+   "patch": 0.02,
+   "type": "standard",
+   "group": 0
+  },
+  {
+   "label": "R",
+   "x": 0.0,
+   "y": -0.16,
+   "r": 0.06,
+   "b": 0.03,
+   "patch": 0.02,
+   "type": "standard",
+   "group": 1
+  },
+  {
+   "label": "C",
+   "x": -0.2,
+   "y": 0.0,
+   "r": 0.02,
+   "b": 0.02,
+   "patch": 0.01,
+   "type": "caster",
+   "group": -1,
+   "J": 1e-05,
+   "swivel": 0,
+   "mass": 0.05
+  }
+ ],
+ "motor": {
+  "R": 1.5,
+  "Ce": 0.02,
+  "kt": 0.02,
+  "gear": 50.0,
+  "eta": 0.75,
+  "I0": 0.15,
+  "Vmax": 12.0,
+  "kp": 0.1,
+  "ki": 1.0
+ }
+}

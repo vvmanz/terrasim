@@ -1,0 +1,19 @@
+# bump_rows_outdoor — rows of transverse ridges: 10 cm high, 1 m wide, 1.8 m pitch, LETE sand (scale of Husky / Jackal / rover).
+# Run:    bash scripts/drive.sh --map bump_rows_outdoor            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "bump_rows_outdoor@*"         (all scenarios: across, diagonal)
+#         bash scripts/drive.sh --map bump_rows_outdoor@diagonal --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview bump_rows_outdoor      Format: docs/en/MAPS.md
+world:
+  name: bump_rows_outdoor
+  description: Rows of 10 cm ridges every 1.8 m on sand
+  tags: [bumps, rows, outdoor]
+  default_surface: sand_lete
+  bounds: {xmin: -3, xmax: 14, ymin: -4, ymax: 4}
+  resolution: 0.03
+  zones: []
+  relief:
+    - {type: ridges, height: 0.1, width: 1.0, pitch: 1.8, from: 0.0, to: 11.0, dir_deg: 0}
+  robots: [jackal, husky, rover, pioneer]
+  scenarios:
+    across: {spawn: [-2, 0, 0], traj: 'line:L=14', note: perpendicular to the ridges}
+    diagonal: {spawn: [-2, -3, 20], traj: 'line:L=14', note: at 20°}

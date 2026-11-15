@@ -1,0 +1,22 @@
+# sand_traps — a gray floor with sand traps: left, right, a clay strip across and a large circle of sand.
+# A trap under one side gives a yaw moment, visible in the cross-track error.
+# Run:    bash scripts/drive.sh --map sand_traps            (scenario 'straight', the robots listed in robots:)
+#         bash scripts/drive.sh --map "sand_traps@*"         (all scenarios: straight)
+#         bash scripts/drive.sh --map sand_traps@straight --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview sand_traps      Format: docs/en/MAPS.md
+world:
+  name: sand_traps
+  description: Sand traps under one side and a clay strip
+  tags: [surfaces, indoor]
+  default_surface: gray
+  bounds: {xmin: -2, xmax: 13, ymin: -3, ymax: 3}
+  resolution: 0.02
+  zones:
+    - {surface: sand_lete, type: circle, center: [2, 0.55], radius: 0.6}   # under the left side
+    - {surface: sand_lete, type: circle, center: [5, -0.55], radius: 0.6}   # under the right side
+    - {surface: clay_wet, type: rect, xmin: 7.5, xmax: 8.0, ymin: -3, ymax: 3}   # clay strip
+    - {surface: sand_lete, type: circle, center: [10.5, 0], radius: 1.0}
+  relief: []
+  robots: [robotino, burger, jackal, pioneer]
+  scenarios:
+    straight: {spawn: [-1, 0, 0], traj: 'line:L=13'}

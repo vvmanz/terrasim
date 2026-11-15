@@ -1,0 +1,21 @@
+# build outputs
+build/
+core/build/
+logs/
+__pycache__/
+*.pyc
+
+# simulation outputs (re-created by the tools; can be hundreds of MB)
+runs/
+runs_drive/
+datasets/
+results/
+
+# editor / OS
+*.swp
+*~
+.DS_Store
+.vscode/
+.idea/
+
+tools/.cache/

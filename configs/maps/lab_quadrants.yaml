@@ -1,0 +1,23 @@
+# lab_quadrants — the four calibrated lab floors of Robotino, one per quadrant, on a flat floor.
+# Run:    bash scripts/drive.sh --map lab_quadrants            (scenario 'square', the robots listed in robots:)
+#         bash scripts/drive.sh --map "lab_quadrants@*"         (all scenarios: square, circle, figure8)
+#         bash scripts/drive.sh --map lab_quadrants@figure8 --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview lab_quadrants      Format: docs/en/MAPS.md
+world:
+  name: lab_quadrants
+  description: Four calibrated floors, one per quadrant
+  tags: [surfaces, indoor, robotino]
+  default_surface: table
+  bounds: {xmin: -3, xmax: 3, ymin: -3, ymax: 3}
+  resolution: 0.02
+  zones:
+    - {surface: table, type: rect, xmin: -3, xmax: 0, ymin: -3, ymax: 0}
+    - {surface: gray, type: rect, xmin: -3, xmax: 0, ymin: 0, ymax: 3}
+    - {surface: red, type: rect, xmin: 0, xmax: 3, ymin: -3, ymax: 0}
+    - {surface: green, type: rect, xmin: 0, xmax: 3, ymin: 0, ymax: 3}
+  relief: []
+  robots: [robotino, burger, waffle, youbot]
+  scenarios:
+    square: {spawn: [0, -1.5, 0], traj: 'square:L=3,rc=0.3'}
+    circle: {spawn: [0, -1.5, 0], traj: 'circle:R=1.5'}
+    figure8: {spawn: [0, 0, 0], traj: 'figure8:A=2'}

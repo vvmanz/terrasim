@@ -1,0 +1,21 @@
+# hill — a single hill: 0.9 m high, base radius 3.5 m (steepest slope ≈ 22°), LETE sand.
+# over — across the top; contour — a circle on the slope (roll); diagonal — past the top.
+# Run:    bash scripts/drive.sh --map hill            (scenario 'over', the robots listed in robots:)
+#         bash scripts/drive.sh --map "hill@*"         (all scenarios: over, contour, diagonal)
+#         bash scripts/drive.sh --map hill@diagonal --robot husky --engine harmonic --gui
+# Preview: python3 tools/maps.py preview hill      Format: docs/en/MAPS.md
+world:
+  name: hill
+  description: 0.9 m hill (up to 22°) on sand
+  tags: [hill, outdoor]
+  default_surface: sand_lete
+  bounds: {xmin: -6, xmax: 6, ymin: -6, ymax: 6}
+  resolution: 0.04
+  zones: []
+  relief:
+    - {type: hill, center: [0, 0], height: 0.9, radius: 3.5}
+  robots: [husky, jackal, rover, pioneer]
+  scenarios:
+    over: {spawn: [-5, 0, 0], traj: 'line:L=10'}
+    contour: {spawn: [0, -2.0, 0], traj: 'circle:R=2'}
+    diagonal: {spawn: [-5, -2.5, 25], traj: 'line:L=10'}

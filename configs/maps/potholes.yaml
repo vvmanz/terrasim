@@ -1,0 +1,19 @@
+# potholes — 25 holes up to 6 cm deep with radius 35–60 cm in a gray surface (like broken asphalt).
+# Run:    bash scripts/drive.sh --map potholes            (scenario 'straight', the robots listed in robots:)
+#         bash scripts/drive.sh --map "potholes@*"         (all scenarios: straight, slalom)
+#         bash scripts/drive.sh --map potholes@slalom --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview potholes      Format: docs/en/MAPS.md
+world:
+  name: potholes
+  description: Potholes up to 6 cm
+  tags: [bumps, outdoor]
+  default_surface: gray
+  bounds: {xmin: -2, xmax: 13, ymin: -3.5, ymax: 3.5}
+  resolution: 0.03
+  zones: []
+  relief:
+    - {type: bumps, n: 25, height: -0.06, radius: [0.35, 0.6], area: [0.0, 13.0, -3.5, 3.5], seed: 4}
+  robots: [jackal, husky, pioneer]
+  scenarios:
+    straight: {spawn: [-1, 0, 0], traj: 'line:L=13'}
+    slalom: {spawn: [-1, 0, 0], traj: 'slalom:L=12,A=1.5,n=2'}

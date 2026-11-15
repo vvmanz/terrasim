@@ -1,0 +1,461 @@
+{
+ "_doc": "Surface library for wheeled robots with ordinary (pneumatic or lugged) tyres, built for the Clearpath Husky A200 (drive.sh --surface-file configs/surfaces_husky.json); any robot can use it. Entries extend the base library of configs/calibrated_params.json through \"base\" (hard surfaces: base table, no Bekker layer; soils: a full Bekker-Janosi set). Groups: hard, soil, intermediate (synthetic interpolation between two sourced entries), fitted (calibrated on recorded runs of a real Husky). Every entry says where each number comes from in _src: [H] handbook / literature value, [F] fitted on recorded runs of the real robot, [E] estimate inside a physically plausible range, [S] synthetic. Units: kc N/m^(n+1), kphi N/m^(n+2), c Pa, K m.",
+ "_spread_doc": "cv_res / cv_grip / cv_soil / corr_len: spatial heterogeneity of every surface, identified on recorded Husky runs (fluctuation of the side motor currents around their 1 s mean) per surface class (fitted entries) or per group (hard: s = 1.25, soils: s = 2, snow: s = 3 times the Robotino-calibrated spread, correlation length L = 0.1-0.2 m).",
+ "_sources": {
+  "wong_adhesion": "J.Y. Wong, Theory of Ground Vehicles, 4th ed., Wiley 2008, Table 1.3 (average peak and sliding tyre-road adhesion coefficients)",
+  "wong_rolling": "J.Y. Wong, Theory of Ground Vehicles, Table 1.1 (rolling resistance coefficients of car tyres on various surfaces)",
+  "wong_soils": "J.Y. Wong, Theory of Ground Vehicles, Table 2.3 (n, kc, kphi, c, phi of terrains); n, kc, kphi cross-checked with Han et al. 2014, Trans. CSAE 30(11):45, Table 4",
+  "marssim": "MarsSim soil, Table II of the MarsSim paper (as in configs/calibrated_params.json, mars_soil)",
+  "fit": "calibration on recorded runs of a Husky A200: BorealTC (LaRocque et al., IROS 2024) and RoboNav route 2 (Eder et al., 2023), fitting halves only"
+ },
+ "asphalt_dry": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.85,
+  "K": 0.005,
+  "f_roll": 0.013,
+  "_src": {
+   "mu": "H wong_adhesion: dry asphalt/concrete peak 0.8-0.9 (sliding 0.75)",
+   "f_roll": "H wong_rolling: concrete, asphalt 0.013",
+   "K": "E tread compliance 5 mm (hard ground 3-7 mm)"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "asphalt_wet": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.6,
+  "K": 0.005,
+  "f_roll": 0.013,
+  "_src": {
+   "mu": "H wong_adhesion: wet asphalt peak 0.5-0.7 (sliding 0.45-0.6)",
+   "f_roll": "H wong_rolling: concrete, asphalt 0.013",
+   "K": "E 5 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "concrete_wet": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.8,
+  "K": 0.005,
+  "f_roll": 0.013,
+  "_src": {
+   "mu": "H wong_adhesion: wet concrete peak 0.8 (sliding 0.7)",
+   "f_roll": "H wong_rolling 0.013",
+   "K": "E 5 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "gravel_road": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.6,
+  "K": 0.01,
+  "f_roll": 0.02,
+  "_src": {
+   "mu": "H wong_adhesion: gravel peak 0.6 (sliding 0.55)",
+   "f_roll": "H wong_rolling: rolled gravel 0.02",
+   "K": "E 10 mm (loose top layer)"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "earth_dry": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.68,
+  "K": 0.015,
+  "f_roll": 0.05,
+  "_src": {
+   "mu": "H wong_adhesion: earth road, dry, peak 0.68 (sliding 0.65)",
+   "f_roll": "H wong_rolling: unpaved road 0.05",
+   "K": "E 15 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "earth_wet": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.55,
+  "K": 0.02,
+  "f_roll": 0.05,
+  "_src": {
+   "mu": "H wong_adhesion: earth road, wet, peak 0.55 (sliding 0.4-0.5)",
+   "f_roll": "H wong_rolling: unpaved road 0.05 (wet: same value, no separate entry)",
+   "K": "E 20 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "snow_packed": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.2,
+  "K": 0.01,
+  "f_roll": 0.025,
+  "_src": {
+   "mu": "H wong_adhesion: snow, hard-packed, peak 0.2 (sliding 0.15)",
+   "f_roll": "E 0.025 (between rolled gravel and unpaved road; no handbook entry)",
+   "K": "E 10 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "ice_road": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.1,
+  "K": 0.005,
+  "f_roll": 0.01,
+  "_src": {
+   "mu": "H wong_adhesion: ice peak 0.1 (sliding 0.07)",
+   "f_roll": "E 0.010 (as indoor floor)",
+   "K": "E 5 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "indoor_floor": {
+  "base": "table",
+  "_group": "hard",
+  "mu": 0.7,
+  "K": 0.005,
+  "f_roll": 0.012,
+  "_src": {
+   "mu": "E rubber on smooth dry indoor floor 0.6-0.8",
+   "f_roll": "E tyres on concrete 0.010-0.015",
+   "K": "E 5 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "lete_sand": {
+  "base": "sand_lete",
+  "_group": "soil",
+  "n": 0.79,
+  "kc": 102000.0,
+  "kphi": 5301000.0,
+  "c": 1300.0,
+  "mu": 0.6032,
+  "K": 0.012,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: LETE sand n 0.79, kc 102, kphi 5301, c 1.3 kPa, phi 31.1 deg",
+   "K": "E 12 mm (sands 10-25 mm)"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "sandy_loam_15": {
+  "base": "sandy_loam",
+  "_group": "soil",
+  "n": 0.7,
+  "kc": 5270.0,
+  "kphi": 1515040.0,
+  "c": 1720.0,
+  "mu": 0.5543,
+  "K": 0.025,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: sandy loam 15 % moisture: n 0.7, kc 5.27, kphi 1515.04, c 1.72 kPa, phi 29 deg",
+   "K": "E 25 mm (loams 6-25 mm)"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "sandy_loam_32": {
+  "base": "sandy_loam",
+  "_group": "soil",
+  "n": 0.5,
+  "kc": 770.0,
+  "kphi": 51910.0,
+  "c": 5170.0,
+  "mu": 0.1944,
+  "K": 0.025,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: sandy loam (Hanamoto) 32 %: n 0.5, kc 0.77, kphi 51.91, c 5.17 kPa, phi 11 deg",
+   "K": "E 25 mm"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "clay_38": {
+  "base": "clay_wet",
+  "_group": "soil",
+  "n": 0.5,
+  "kc": 13190.0,
+  "kphi": 692150.0,
+  "c": 4140.0,
+  "mu": 0.2309,
+  "K": 0.01,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: clayey soil (Thailand) 38 %: n 0.5, kc 13.19, kphi 692.15, c 4.14 kPa, phi 13 deg",
+   "K": "E 10 mm"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "grenville_loam": {
+  "base": "sandy_loam",
+  "_group": "soil",
+  "n": 1.01,
+  "kc": 60.0,
+  "kphi": 5880000.0,
+  "c": 3100.0,
+  "mu": 0.5727,
+  "K": 0.025,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: Grenville loam 24 %: n 1.01, kc 0.06, kphi 5880, c 3.1 kPa, phi 29.8 deg (= RoboNav meadow prior)",
+   "K": "E 25 mm"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "snow_us": {
+  "base": "sand_lete",
+  "_group": "soil",
+  "n": 1.6,
+  "kc": 4370.0,
+  "kphi": 196720.0,
+  "c": 1030.0,
+  "mu": 0.3581,
+  "K": 0.025,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: snow (U.S.): n 1.6, kc 4.37, kphi 196.72, c 1.03 kPa, phi 19.7 deg",
+   "K": "E 25 mm"
+  },
+  "cv_res": 0.3,
+  "cv_grip": 0.6,
+  "cv_soil": 0.6,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: class SNOW, s=3, L=0.2 m"
+ },
+ "snow_sweden": {
+  "base": "sand_lete",
+  "_group": "soil",
+  "n": 1.44,
+  "kc": 10550.0,
+  "kphi": 66080.0,
+  "c": 6000.0,
+  "mu": 0.3779,
+  "K": 0.025,
+  "_src": {
+   "n,kc,kphi,c,phi": "H wong_soils: snow (Sweden): n 1.44, kc 10.55, kphi 66.08, c 6 kPa, phi 20.7 deg",
+   "K": "E 25 mm"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "mars_soil": {
+  "base": "mars_soil",
+  "_group": "soil",
+  "_src": {
+   "all": "H marssim (library entry, unchanged)"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "asphalt_damp": {
+  "base": "table",
+  "_group": "intermediate",
+  "mu": 0.72,
+  "K": 0.005,
+  "f_roll": 0.013,
+  "_src": {
+   "mu": "S midpoint of asphalt_dry (0.85) and asphalt_wet (0.6)",
+   "f_roll": "H wong_rolling 0.013",
+   "K": "E 5 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "slush": {
+  "base": "table",
+  "_group": "intermediate",
+  "mu": 0.15,
+  "K": 0.01,
+  "f_roll": 0.02,
+  "_src": {
+   "mu": "S midpoint of snow_packed (0.2) and ice_road (0.1)",
+   "f_roll": "S between ice_road (0.010) and snow_packed (0.025)",
+   "K": "E 10 mm"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "loam_moist": {
+  "base": "sandy_loam",
+  "_group": "intermediate",
+  "n": 0.755,
+  "kc": 215.0,
+  "kphi": 552500.0,
+  "c": 4135.0,
+  "mu": 0.3836,
+  "K": 0.025,
+  "_src": {
+   "n,c,mu": "S arithmetic mean of grenville_loam (dry meadow, RoboNav) and sandy_loam_32 (wet loam, BorealTC prior)",
+   "kc,kphi": "S geometric mean of the same two sets",
+   "K": "E 25 mm"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "paved_fit": {
+  "base": "table",
+  "_group": "fitted",
+  "mu": 0.8934752152141967,
+  "f_roll": 0.0271208290436218,
+  "K": 0.005,
+  "_src": {
+   "mu,f_roll": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), class ASPHALT",
+   "K": "E 5 mm (not fitted)"
+  },
+  "cv_res": 0.3385,
+  "cv_grip": 0.7167,
+  "cv_soil": 0.0,
+  "corr_len": 0.1,
+  "_spread": "spread identified on recorded runs: class ASPHALT, s=1, L=0.1 m"
+ },
+ "flooring_fit": {
+  "base": "table",
+  "_group": "fitted",
+  "mu": 0.5978985549707865,
+  "f_roll": 0.0120250787184677,
+  "K": 0.005,
+  "_src": {
+   "mu,f_roll": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), class FLOORING",
+   "K": "E 5 mm (not fitted)"
+  },
+  "cv_res": 0.5078,
+  "cv_grip": 0.9,
+  "cv_soil": 0.0,
+  "corr_len": 0.3,
+  "_spread": "spread identified on recorded runs: class FLOORING, s=1.5, L=0.3 m"
+ },
+ "ice_fit": {
+  "base": "table",
+  "_group": "fitted",
+  "mu": 0.1209109317502189,
+  "f_roll": 0.0132167242417465,
+  "K": 0.005,
+  "_src": {
+   "mu,f_roll": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), class ICE",
+   "K": "E 5 mm (not fitted)"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ },
+ "sandy_loam_fit": {
+  "base": "sandy_loam",
+  "_group": "fitted",
+  "K": 0.0141668615612661,
+  "mu": 0.6448658726515524,
+  "_src": {
+   "K,mu": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), class SANDY_LOAM",
+   "n,kc,kphi,c": "H Wong Table 2.3, sandy loam 15 % (prior, not fitted)"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: class SANDY_LOAM, s=2, L=0.2 m"
+ },
+ "meadow_fit": {
+  "base": "sandy_loam",
+  "_group": "fitted",
+  "n": 1.01,
+  "kc": 60.0,
+  "kphi": 5880000.0,
+  "c": 3100.0,
+  "K": 0.005,
+  "mu": 0.4109280007590006,
+  "_src": {
+   "K,mu": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), RoboNav meadow",
+   "n,kc,kphi,c": "H Wong Table 2.3, Grenville loam (prior, not fitted)"
+  },
+  "cv_res": 0.2,
+  "cv_grip": 0.4,
+  "cv_soil": 0.4,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: soil group, s=2, L=0.2 m"
+ },
+ "gravel_fit": {
+  "base": "table",
+  "_group": "fitted",
+  "mu": 0.7680814739921697,
+  "f_roll": 0.0367616913877069,
+  "K": 0.01,
+  "_src": {
+   "mu,f_roll": "F fit (BorealTC FIT runs + RoboNav route 2 FIT segments), RoboNav gravel road",
+   "K": "E 10 mm (not fitted)"
+  },
+  "cv_res": 0.4231,
+  "cv_grip": 0.8959,
+  "cv_soil": 0.0,
+  "corr_len": 0.2,
+  "_spread": "spread identified on recorded runs: hard group, s=1.25, L=0.2 m"
+ }
+}

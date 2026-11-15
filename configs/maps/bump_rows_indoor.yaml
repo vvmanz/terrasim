@@ -1,0 +1,20 @@
+# bump_rows_indoor — rows of transverse bumps: 2 cm high, 30 cm wide, 60 cm pitch, gray floor (scale of small robots).
+# Rows of bumps across the path; 'diagonal': the wheels hit them one after another (roll oscillation).
+# Run:    bash scripts/drive.sh --map bump_rows_indoor            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "bump_rows_indoor@*"         (all scenarios: across, diagonal)
+#         bash scripts/drive.sh --map bump_rows_indoor@diagonal --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview bump_rows_indoor      Format: docs/en/MAPS.md
+world:
+  name: bump_rows_indoor
+  description: Rows of 2 cm transverse bumps every 60 cm
+  tags: [bumps, rows, indoor]
+  default_surface: gray
+  bounds: {xmin: -3, xmax: 9, ymin: -3, ymax: 3}
+  resolution: 0.01
+  zones: []
+  relief:
+    - {type: ridges, height: 0.02, width: 0.3, pitch: 0.6, from: 0.0, to: 6.0, dir_deg: 0}
+  robots: [robotino, burger, waffle, youbot]
+  scenarios:
+    across: {spawn: [-2, 0, 0], traj: 'line:L=9', note: perpendicular to the bumps}
+    diagonal: {spawn: [-2, -2.5, 30], traj: 'line:L=9', note: at 30°}

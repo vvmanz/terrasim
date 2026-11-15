@@ -1,0 +1,19 @@
+# dunes — a sine wave of ±35 cm with a 6 m wavelength (slopes up to 20°), LETE sand.
+# Run:    bash scripts/drive.sh --map dunes            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "dunes@*"         (all scenarios: across, oblique)
+#         bash scripts/drive.sh --map dunes@oblique --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview dunes      Format: docs/en/MAPS.md
+world:
+  name: dunes
+  description: "Dunes ±35 cm, 6 m wavelength"
+  tags: [waves, outdoor]
+  default_surface: sand_lete
+  bounds: {xmin: -2, xmax: 17, ymin: -4, ymax: 4}
+  resolution: 0.04
+  zones: []
+  relief:
+    - {type: waves, amplitude: 0.35, wavelength: 6.0, dir_deg: 0, from: 0.0, to: 14.0}
+  robots: [rover, husky, jackal]
+  scenarios:
+    across: {spawn: [-1, 0, 0], traj: 'line:L=16'}
+    oblique: {spawn: [0, -3, 25], traj: 'line:L=14'}

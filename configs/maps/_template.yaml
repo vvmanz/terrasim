@@ -1,0 +1,69 @@
+# terrasim map template. A new map from it:   python3 tools/maps.py new my_map
+# Picture of the map:                         python3 tools/maps.py preview my_map
+# Contact-model check for given robots:       python3 tools/maps.py check my_map --robot burger,husky
+# Run:                                        bash scripts/drive.sh --map my_map           (default scenario = the first one)
+#                                             bash scripts/drive.sh --map "my_map@*"      (all scenarios)
+# Full format reference: docs/en/MAPS.md. Sections: bounds, default_surface, zones (surfaces), relief (heights),
+# surfaces (map-local surfaces), robots, scenarios (ready-made runs).
+world:
+  name: template
+  description: Template, every kind of zone and relief on one map
+  tags: [example]
+  default_surface: gray            # surface wherever no zone applies (names: bash scripts/drive.sh --list)
+  bounds: {xmin: -5, xmax: 5, ymin: -4, ymax: 4}
+  resolution: 0.02                 # grid step of heights and surfaces, m (small bumps need a fine step)
+
+  # Surfaces. Zones are painted in order: a later zone overrides an earlier one.
+  # Types: rect, polygon, circle, ring, band (a strip along a polyline), halfplane,
+  #        stripes / checkerboard / voronoi (patterns of several surfaces). Any zone can be limited to
+  #        area: [xmin, xmax, ymin, ymax], then it acts only inside that rectangle.
+  zones:
+    - {surface: carpet, type: rect, xmin: 1, xmax: 5, ymin: -4, ymax: 0}
+    - {surface: sand_lete, type: polygon, points: [[-4, 1], [-1, 1.5], [-1.5, 3.5], [-4, 3.5]]}
+    - {surface: clay_wet, type: circle, center: [2.5, 2.0], radius: 0.8}
+    - {surface: foam, type: ring, center: [2.5, 2.0], r_in: 0.8, r_out: 1.1}
+    - {surface: table, type: band, points: [[-5, -2], [0, -2], [3, -3.5]], width: 0.8}
+    - {type: checkerboard, surfaces: [green, red], cell: 0.5, area: [-4, -2, -1, 0.5]}
+
+  # Relief: elements are applied in order (almost all of them add up).
+  # plane      — inclined plane: slope_deg, dir_deg (uphill direction), origin [x, y] (height 0 there)
+  # ramp       — ramp: slope_deg, from, to (coordinate along dir_deg), blend (length of the rounded break), then a plateau
+  # slopes     — sections of different steepness in a row: start, segments [{slope_deg, length}, ...], blend, then: flat|continue
+  # mound      — MarsSim Fig. 15 mound (smoothed trapezoid across the map): x_start, L_up, L_top, L_down, height, smooth
+  # ridges     — rows of transverse ridges: height, width, pitch, from, to (or count), dir_deg
+  # bump/hill  — one bump (height < 0: a hole): center, height, radius (cosine dome)
+  # bump_rows  — bumps on a lattice: height, radius, pitch or [pitch_u, pitch_v], area [u0, u1, v0, v1]
+  #              in the dir_deg axes, stagger (shifted rows), jitter (height spread 0..1), sign up|down|mixed
+  # bumps      — random bumps: n, height, radius or [rmin, rmax], area, seed, signed, avoid [[x, y, r], ...]
+  # crater     — crater with a rim: center, radius, depth, rim (rim height as a fraction of the depth), rim_width (fraction of the radius)
+  # craters    — random craters: n, radius [rmin, rmax], depth_ratio, rim, area, seed, avoid
+  # waves      — sine wave: amplitude, wavelength, dir_deg, from/to (smoothly switched on and off)
+  # rough      — fractal roughness: amplitude (RMS), wavelength (longest wave), beta, octaves, seed, area
+  # trench/berm — ditch / bank along a polyline: points, width (half-width of the slope), flat (half-width of the flat bottom), height (±)
+  # image      — height map from a picture (black = 0, white = height): file, height, area, blur, invert
+  # flatten    — flat pad (start): center, radius, blend
+  # The relief must be smooth at the wheel scale: the wheel touches the ground at one point below its centre
+  # (tools/maps.py check shows where this approximation breaks).
+  relief:
+    - {type: plane, slope_deg: 3, dir_deg: 90}
+    - {type: ridges, height: 0.03, width: 0.25, pitch: 0.6, from: 1.5, to: 4.5}
+    - {type: bump_rows, height: 0.04, radius: 0.2, pitch: 0.5, area: [-4, -2, 1, 3.5], stagger: true}
+    - {type: crater, center: [2.5, 2.0], radius: 0.8, depth: 0.12}
+    - {type: trench, points: [[-1, -4], [-1, 4]], width: 0.4, flat: 0.1, height: -0.08}
+    - {type: flatten, center: [-4, -2], radius: 0.6, blend: 0.4}
+
+  # Map-local surfaces: a library surface (base) + changed parameters (same format as --surface-file).
+  # _color — colour in Gazebo and in the pictures. Change friction with mu (= tan phi): every library surface sets mu,
+  # and mu wins over phi_deg.
+  surfaces:
+    wet_carpet: {base: carpet, mu: 0.4, _color: "0.30 0.30 0.45 1"}
+
+  # Robots that drive.sh --map takes when --robot is not given.
+  robots: [robotino, jackal]
+
+  # Ready-made runs. spawn: [x, y, heading in degrees]; traj: as --traj (tools/trajectories.py).
+  # route: [[x, y], ...] — a path through map points (spline, starts at the first point).
+  # speed — cruise speed, m/s (otherwise the robot's default speed).
+  scenarios:
+    road: {spawn: [-4.5, -2, 0], traj: "line:L=4.5", note: along the table strip}
+    tour: {route: [[-4, -2], [-2, 0], [0, 2.5], [2.5, 2.0], [4, 0]], note: through the sand and the crater}

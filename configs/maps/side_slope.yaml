@@ -1,0 +1,21 @@
+# side_slope — a 15° side slope (uphill towards +y): LETE sand with a strip of gray surface along the slope.
+# The robot drives across the slope: heading keeping and sideways sliding (xtrack, slip_lat).
+# Run:    bash scripts/drive.sh --map side_slope            (scenario 'road', the robots listed in robots:)
+#         bash scripts/drive.sh --map "side_slope@*"         (all scenarios: road, sand)
+#         bash scripts/drive.sh --map side_slope@sand --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview side_slope      Format: docs/en/MAPS.md
+world:
+  name: side_slope
+  description: "15° side slope: sand and a road along the slope"
+  tags: [slope, side]
+  default_surface: sand_lete
+  bounds: {xmin: -6, xmax: 6, ymin: -4, ymax: 4}
+  resolution: 0.04
+  zones:
+    - {surface: gray, type: band, points: [[-6, 0], [6, 0]], width: 1.2}   # road
+  relief:
+    - {type: plane, slope_deg: 15, dir_deg: 90}
+  robots: [jackal, husky, pioneer, robotino]
+  scenarios:
+    road: {spawn: [-5, 0, 0], traj: 'line:L=10', note: along the road, across the slope}
+    sand: {spawn: [-5, -2, 0], traj: 'line:L=10', note: on the sand, across the slope}

@@ -1,0 +1,503 @@
+{
+ "_doc": "Central parameter file. robotino: robot, motors, omni contact and the Robotino surface library (also the base library of every other robot: any surface can be used by any robot, and other libraries extend it through \"base\"). rover: the MarsSim rover. Surface groups (_kind): calibrated = identified on the real robot, synthetic / extreme / hard = built from handbook values on top of a calibrated surface. Every _doc says where the numbers come from.",
+ "robotino": {
+  "_doc": "Robotino 1.6 (3 omni wheels), firm-ground Bekker-Wong-Janosi omni contact; robot, motors and the four \"calibrated\" surfaces identified on 576 recorded runs of the real robot (4 floors x 72 directions x 0.1-0.3 m/s)",
+  "robot": {
+   "R": 0.125,
+   "r": 0.04,
+   "gamma_deg": 90,
+   "mass": 11.0,
+   "Iz": 0.15,
+   "com_x": -0.016319,
+   "com_y": 0.00017193,
+   "com_h": 0.08,
+   "Jw": 0.002,
+   "theta_deg": [
+    60,
+    180,
+    300
+   ]
+  },
+  "motor": {
+   "R": 5.3351,
+   "Ce": 0.0501,
+   "kt": 0.0501,
+   "gear": 16,
+   "eta": 0.8,
+   "I0": 0.17,
+   "w_eps": 2.0,
+   "Vmax": 24,
+   "Vd": 1.416,
+   "kp": 0.748,
+   "ff": 1.0
+  },
+  "omni_contact": {
+   "slip_v_eps": 0.005,
+   "slip_v_ramp": 0.01,
+   "slip_relax_len": 0.01,
+   "slip_tau_min": 0.005,
+   "v_eps": 0.003,
+   "slip_norm": 1,
+   "slip_max": 10.0
+  },
+  "surfaces": {
+   "gray": {
+    "mu": 1.3511,
+    "K": 0.0045698,
+    "patch_len": 0.01,
+    "f_roll": 0.010247,
+    "f_lat": 0.43424,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.1307,
+    "cv_grip": 0.2622,
+    "corr_len": 0.01,
+    "_kind": "calibrated",
+    "_doc": "gray rubber mat (calibrated on recorded runs: run means and 0.5 s windows)"
+   },
+   "green": {
+    "mu": 0.54397,
+    "K": 0.0054046,
+    "patch_len": 0.01,
+    "f_roll": 0.088603,
+    "f_lat": 0.30926,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.1527,
+    "cv_grip": 0.2839,
+    "corr_len": 0.01,
+    "_kind": "calibrated",
+    "_doc": "green plastic turf (calibrated on recorded runs)"
+   },
+   "table": {
+    "mu": 1.0,
+    "K": 0.0070586,
+    "patch_len": 0.01,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "_kind": "calibrated",
+    "_doc": "table, chipboard (calibrated on recorded runs); mu is not identifiable (the wheels stay far from the friction limit), fixed at 1.0"
+   },
+   "red": {
+    "mu": 1.0,
+    "K": 0.0038745,
+    "patch_len": 0.01,
+    "f_roll": 3.1196e-06,
+    "f_lat": 0.13062,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.1982,
+    "cv_grip": 0.3261,
+    "corr_len": 0.01,
+    "_kind": "calibrated",
+    "_doc": "red EVA mat (calibrated on recorded runs); mu is not identifiable, fixed at 1.0"
+   },
+   "table_wet": {
+    "_kind": "synthetic",
+    "_doc": "chipboard / laminate with a water film: the calibrated table with mu 1.0 -> 0.35 (rubber on a wet smooth surface 0.3-0.4); compliance K and losses as the table",
+    "mu": 0.35,
+    "K": 0.0070586,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "carpet": {
+    "_kind": "synthetic",
+    "_doc": "carpet, 6 mm pile on a rigid base: the pile compresses by ~2.5 mm under the wheel (p ~130 kPa) and recovers by 75 %; the rollers sink into the pile (f_lat between green and gray), pile shear K as green",
+    "mu": 1.0,
+    "K": 0.006,
+    "f_roll": 0.02,
+    "f_lat": 0.35,
+    "kc": 0.0,
+    "kphi": 50900000.0,
+    "n": 1.0,
+    "b_contact": 0.03,
+    "layer": 0.006,
+    "rebound": 0.75,
+    "slip_norm": 1,
+    "cv_res": 0.15,
+    "cv_grip": 0.28,
+    "corr_len": 0.01,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "carpet_shag": {
+    "_kind": "synthetic",
+    "_doc": "shag carpet, 15 mm pile: compresses by ~6 mm (40 %), recovers by 70 %; the rollers sink into the pile (f_lat above gray), pile shear K 10 mm, rubber-on-fibre friction 0.9",
+    "mu": 0.9,
+    "K": 0.01,
+    "f_roll": 0.03,
+    "f_lat": 0.5,
+    "kc": 0.0,
+    "kphi": 13700000.0,
+    "n": 1.0,
+    "b_contact": 0.03,
+    "layer": 0.015,
+    "rebound": 0.7,
+    "slip_norm": 1,
+    "cv_res": 0.15,
+    "cv_grip": 0.28,
+    "corr_len": 0.01,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "foam": {
+    "_kind": "synthetic",
+    "_doc": "soft polyurethane foam mat, 20 mm: linear foam (n = 1), sinkage ~6 mm, hysteresis 20 % (rebound 0.8); friction and shear as the calibrated EVA mat",
+    "mu": 1.2,
+    "K": 0.004,
+    "f_roll": 0.0,
+    "f_lat": 0.13,
+    "kc": 0.0,
+    "kphi": 13700000.0,
+    "n": 1.0,
+    "b_contact": 0.03,
+    "layer": 0.02,
+    "rebound": 0.8,
+    "slip_norm": 1,
+    "cv_res": 0.2,
+    "cv_grip": 0.33,
+    "corr_len": 0.01,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "sand_lete": {
+    "_kind": "synthetic",
+    "_doc": "dense LETE sand (Wong; Project Chrono): kc 102 kN/m^(n+1), kphi 5301 kN/m^(n+2), n 0.793, c 1.3 kPa, phi 31.1 deg, K 12 mm",
+    "mu": 0.6032,
+    "c": 1300.0,
+    "K": 0.012,
+    "f_roll": 0.0,
+    "f_lat": 0.02,
+    "kc": 102000.0,
+    "kphi": 5301000.0,
+    "n": 0.793,
+    "b_contact": 0.03,
+    "rebound": 0.0,
+    "slip_norm": 1,
+    "cv_res": 0.1,
+    "cv_grip": 0.2,
+    "cv_soil": 0.2,
+    "corr_len": 0.05,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "sandy_loam": {
+    "_kind": "extreme",
+    "_doc": "sandy loam, 15 % moisture (Wong, LLL): kc 5.27 kN/m^(n+1), kphi 1515 kN/m^(n+2), n 0.7, c 1.72 kPa, phi 29 deg, K 25 mm. Robotino (8 cm wheels, 11 kg) gets stuck: 3-8 % of the commanded speed, slip ~1",
+    "mu": 0.5543,
+    "c": 1720.0,
+    "K": 0.025,
+    "f_roll": 0.0,
+    "f_lat": 0.02,
+    "kc": 5270.0,
+    "kphi": 1515040.0,
+    "n": 0.7,
+    "b_contact": 0.03,
+    "rebound": 0.0,
+    "slip_norm": 1,
+    "cv_res": 0.1,
+    "cv_grip": 0.2,
+    "cv_soil": 0.2,
+    "corr_len": 0.05,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "clay_wet": {
+    "_kind": "extreme",
+    "_doc": "wet clayey soil, 38 % moisture (Wong, Thailand): kc 13.19 kN/m^(n+1), kphi 692.2 kN/m^(n+2), n 0.5, c 4.14 kPa, phi 13 deg, K 10 mm. Robotino (8 cm wheels, 11 kg) gets stuck: 3-8 % of the commanded speed, slip ~1",
+    "mu": 0.2309,
+    "c": 4140.0,
+    "K": 0.01,
+    "f_roll": 0.0,
+    "f_lat": 0.02,
+    "kc": 13190.0,
+    "kphi": 692150.0,
+    "n": 0.5,
+    "b_contact": 0.03,
+    "rebound": 0.0,
+    "slip_norm": 1,
+    "cv_res": 0.1,
+    "cv_grip": 0.2,
+    "cv_soil": 0.2,
+    "corr_len": 0.05,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "mars_soil": {
+    "_kind": "extreme",
+    "_doc": "Mars soil simulant of MarsSim (Zhou et al. 2023, Table II): kc 13.6 kN/m^(n+1), kphi 2259.1 kN/m^(n+2), n 0.92, c 462 Pa, phi 35 deg, K 15 mm, the same soil as for the rover. Robotino gets stuck (sinkage 13 mm, ~8 % of the speed): the soil was measured for 14 x 20 cm rover wheels",
+    "mu": 0.7002,
+    "c": 462.3,
+    "K": 0.015,
+    "f_roll": 0.0,
+    "f_lat": 0.02,
+    "kc": 13600.0,
+    "kphi": 2259100.0,
+    "n": 0.92,
+    "b_contact": 0.03,
+    "rebound": 0.0,
+    "slip_norm": 1,
+    "cv_res": 0.1,
+    "cv_grip": 0.2,
+    "cv_soil": 0.2,
+    "corr_len": 0.05,
+    "patch_len": 0.01,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300
+   },
+   "tile": {
+    "mu": 0.6,
+    "K": 0.0070586,
+    "patch_len": 0.01,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "glazed ceramic tile, dry: hard smooth base, losses and K as the calibrated table; mu 0.6 (rubber / polyurethane on dry glazed tile 0.5-0.7, handbook). Joints between tiles are not modelled"
+   },
+   "linoleum": {
+    "mu": 0.7,
+    "K": 0.0070586,
+    "patch_len": 0.01,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "linoleum (PVC), dry: hard smooth base, losses and K as the table; mu 0.7 (rubber on dry linoleum 0.6-0.9, handbook)"
+   },
+   "concrete": {
+    "mu": 0.8,
+    "K": 0.0070586,
+    "patch_len": 0.01,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "trowelled concrete, dry: hard base, losses and K as the table; mu 0.8 (rubber on dry concrete 0.6-0.85, handbook)"
+   },
+   "gray_wet": {
+    "mu": 0.5,
+    "K": 0.0045698,
+    "patch_len": 0.01,
+    "f_roll": 0.010247,
+    "f_lat": 0.43424,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.1307,
+    "cv_grip": 0.2622,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "the calibrated gray rubber mat with a water film: roller losses and K as the dry mat (same rubber hysteresis); mu 1.35 -> 0.5 (rubber on wet rubber 0.4-0.6, handbook)"
+   },
+   "green_wet": {
+    "mu": 0.3,
+    "K": 0.0054046,
+    "patch_len": 0.01,
+    "f_roll": 0.088603,
+    "f_lat": 0.30926,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.1527,
+    "cv_grip": 0.2839,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "the calibrated green plastic turf, wet: losses and K as the dry turf; mu 0.54 -> 0.3 (rubber on wet plastic 0.25-0.4, handbook)"
+   },
+   "ice": {
+    "mu": 0.1,
+    "K": 0.0070586,
+    "patch_len": 0.01,
+    "f_roll": 1.4116e-05,
+    "f_lat": 0.0059334,
+    "mu_rb": 0.049252,
+    "kn": 200000.0,
+    "cn": 300,
+    "cv_res": 0.3385,
+    "cv_grip": 0.7167,
+    "corr_len": 0.01,
+    "_kind": "hard",
+    "_doc": "ice near 0 C: hard smooth base, losses and K as the table; mu 0.1 (rubber / polyurethane on ice 0.05-0.15, handbook)"
+   }
+  },
+  "experiment": {
+   "t_run": {
+    "0.1": 18,
+    "0.2": 10,
+    "0.3": 6
+   },
+   "t_pause": 1.5,
+   "t_start": 1.0,
+   "camera_rate": 30,
+   "speeds": {
+    "gray": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "green": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "table": [
+     0.1
+    ],
+    "red": [
+     0.1
+    ],
+    "table_wet": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "carpet": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "carpet_shag": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "foam": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "sand_lete": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "sandy_loam": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "clay_wet": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "mars_soil": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "tile": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "linoleum": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "concrete": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "gray_wet": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "green_wet": [
+     0.1,
+     0.2,
+     0.3
+    ],
+    "ice": [
+     0.1,
+     0.2,
+     0.3
+    ]
+   }
+  }
+ },
+ "rover": {
+  "_doc": "MarsSim six-wheel rocker-bogie rover (Zhou et al., IEEE TAES 2023, Table II); geometry not published in the paper was identified on the paper experiments",
+  "mass_total": 190.0,
+  "track": 1.34,
+  "wheel_r": 0.14,
+  "wheel_b": 0.2,
+  "lug_h": 0.01,
+  "lam": 0.0,
+  "Rj": -1.0,
+  "r_collision": 0.1542,
+  "mw": 4.0,
+  "Iw": 0.15,
+  "Ic": 12.0,
+  "pF": [
+   0.775,
+   -0.2836
+  ],
+  "pB": [
+   -0.3517,
+   -0.1542
+  ],
+  "dM": [
+   0.3517,
+   -0.1294
+  ],
+  "dR": [
+   -0.4233,
+   -0.1294
+  ],
+  "pc": [
+   0.0415,
+   0.15
+  ],
+  "mu_rock": 0.6,
+  "mu_soil_bare": 0.5
+ }
+}

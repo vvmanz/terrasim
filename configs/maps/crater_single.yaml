@@ -1,0 +1,21 @@
+# crater_single — a large crater: radius 2.5 m, depth 0.5 m, with a rim, MarsSim soil (Table II).
+# through — across the floor; rim — along the crest of the rim; inside — along the inner wall (constant roll).
+# Run:    bash scripts/drive.sh --map crater_single            (scenario 'through', the robots listed in robots:)
+#         bash scripts/drive.sh --map "crater_single@*"         (all scenarios: through, rim, inside)
+#         bash scripts/drive.sh --map crater_single@inside --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview crater_single      Format: docs/en/MAPS.md
+world:
+  name: crater_single
+  description: "Crater R 2.5 m, 0.5 m deep"
+  tags: [crater, marssim]
+  default_surface: mars_soil
+  bounds: {xmin: -2, xmax: 10, ymin: -5, ymax: 5}
+  resolution: 0.04
+  zones: []
+  relief:
+    - {type: crater, center: [4, 0], radius: 2.5, depth: 0.5, rim: 0.25, rim_width: 0.3}
+  robots: [rover, husky, jackal]
+  scenarios:
+    through: {spawn: [-1, 0, 0], traj: 'line:L=10', note: 'in, across the floor, out'}
+    rim: {spawn: [4, -2.5, 0], traj: 'circle:R=2.5', note: along the crest}
+    inside: {spawn: [4, -1.3, 0], traj: 'circle:R=1.3', note: along the wall}

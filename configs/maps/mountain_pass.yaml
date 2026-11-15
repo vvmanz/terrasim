@@ -1,0 +1,22 @@
+# mountain_pass — a pass between two 1.2 m hills (slopes up to 32°), a road of gray surface over the saddle.
+# pass — along the road over the saddle; over — straight across both tops.
+# Run:    bash scripts/drive.sh --map mountain_pass            (scenario 'pass', the robots listed in robots:)
+#         bash scripts/drive.sh --map "mountain_pass@*"         (all scenarios: pass, over)
+#         bash scripts/drive.sh --map mountain_pass@over --robot husky --engine harmonic --gui
+# Preview: python3 tools/maps.py preview mountain_pass      Format: docs/en/MAPS.md
+world:
+  name: mountain_pass
+  description: "Pass between two hills, road over the saddle"
+  tags: [hill, outdoor, slope]
+  default_surface: sand_lete
+  bounds: {xmin: -6, xmax: 6, ymin: -6, ymax: 6}
+  resolution: 0.04
+  zones:
+    - {surface: gray, type: band, points: [[-6, 0], [6, 0]], width: 1.4}   # road over the pass
+  relief:
+    - {type: hill, center: [0, 2.4], height: 1.2, radius: 3.0}
+    - {type: hill, center: [0, -2.4], height: 1.2, radius: 3.0}
+  robots: [husky, jackal, pioneer, rover]
+  scenarios:
+    pass: {spawn: [-5.5, 0, 0], traj: 'line:L=11', note: along the road}
+    over: {spawn: [0, -5.5, 90], traj: 'line:L=11', note: across the tops}

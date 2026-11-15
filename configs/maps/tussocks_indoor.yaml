@@ -1,0 +1,20 @@
+# tussocks_indoor — staggered rows of tussocks: 2.5 cm high, radius 15 cm, 40 cm pitch, gray floor.
+# The wheels hit the tussocks at different times: rocking, varying wheel loads, odometry errors.
+# Run:    bash scripts/drive.sh --map tussocks_indoor            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "tussocks_indoor@*"         (all scenarios: across, diagonal)
+#         bash scripts/drive.sh --map tussocks_indoor@diagonal --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview tussocks_indoor      Format: docs/en/MAPS.md
+world:
+  name: tussocks_indoor
+  description: Field of 2.5 cm tussocks in staggered rows
+  tags: [bumps, rows, indoor]
+  default_surface: gray
+  bounds: {xmin: -2.5, xmax: 8, ymin: -3, ymax: 3}
+  resolution: 0.01
+  zones: []
+  relief:
+    - {type: bump_rows, height: 0.025, radius: 0.15, pitch: 0.4, area: [0.0, 6.0, -2.5, 2.5], stagger: true, dir_deg: 0}
+  robots: [robotino, burger, waffle, youbot]
+  scenarios:
+    across: {spawn: [-1.5, 0, 0], traj: 'line:L=8.5', note: across the rows}
+    diagonal: {spawn: [-1.5, -2, 25], traj: 'line:L=8', note: at 25°}

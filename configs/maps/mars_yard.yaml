@@ -1,0 +1,22 @@
+# mars_yard — a 'Mars yard': roughness, craters, large rock-like bumps, a mosaic of MarsSim soil (Table II) and sand.
+# Run:    bash scripts/drive.sh --map mars_yard            (scenario 'cross', the robots listed in robots:)
+#         bash scripts/drive.sh --map "mars_yard@*"         (all scenarios: cross)
+#         bash scripts/drive.sh --map mars_yard@cross --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview mars_yard      Format: docs/en/MAPS.md
+world:
+  name: mars_yard
+  description: "Mars yard: craters, rocks, roughness"
+  tags: [marssim, outdoor, showcase]
+  default_surface: mars_soil
+  bounds: {xmin: -8, xmax: 8, ymin: -6, ymax: 6}
+  resolution: 0.04
+  zones:
+    - {type: voronoi, surfaces: [mars_soil, sand_lete], cell: 2.5, seed: 11}
+  relief:
+    - {type: rough, amplitude: 0.03, wavelength: 3.0, beta: 2.0, octaves: 4, seed: 3}
+    - {type: craters, n: 6, radius: [0.8, 1.8], depth_ratio: 0.15, rim: 0.3, area: [-5, 8, -6, 6], avoid: [[-7, 0, 1.2]], seed: 8}
+    - {type: bumps, n: 30, height: 0.1, radius: [0.4, 0.7], area: [-5, 8, -6, 6], avoid: [[-7, 0, 1.2]], seed: 9}
+    - {type: flatten, center: [-7, 0], radius: 0.9, blend: 0.6}   # start pad
+  robots: [rover, husky, jackal]
+  scenarios:
+    cross: {route: [[-7, 0], [-3, 1.5], [1, -1], [5, 1], [7, 0]]}

@@ -1,0 +1,20 @@
+# crater_field — a field of 12 craters (radius 0.6–1.6 m, depth 18 % of the radius) on a mosaic of Mars soil and sand.
+# Run:    bash scripts/drive.sh --map crater_field            (scenario 'cross', the robots listed in robots:)
+#         bash scripts/drive.sh --map "crater_field@*"         (all scenarios: cross, tour)
+#         bash scripts/drive.sh --map crater_field@tour --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview crater_field      Format: docs/en/MAPS.md
+world:
+  name: crater_field
+  description: Crater field on Mars soil
+  tags: [crater, marssim, outdoor]
+  default_surface: mars_soil
+  bounds: {xmin: -4, xmax: 16, ymin: -6, ymax: 6}
+  resolution: 0.04
+  zones:
+    - {type: voronoi, surfaces: [mars_soil, sand_lete], cell: 3.0, seed: 5}
+  relief:
+    - {type: craters, n: 12, radius: [0.6, 1.6], depth_ratio: 0.18, rim: 0.3, area: [-1, 16, -6, 6], avoid: [[-2.5, 0, 1.2]], seed: 7}
+  robots: [rover, husky, jackal]
+  scenarios:
+    cross: {spawn: [-3, 0, 0], traj: 'line:L=18'}
+    tour: {route: [[-3, 0], [1, 2.5], [5, -2], [9, 2], [13, -1], [15, 0]]}

@@ -1,0 +1,20 @@
+# mud_road — a 1.2 m road of gray surface winding through a field of wet clay.
+# road — along the road (a path through waypoints); shortcut — straight through the mud.
+# Run:    bash scripts/drive.sh --map mud_road            (scenario 'road', the robots listed in robots:)
+#         bash scripts/drive.sh --map "mud_road@*"         (all scenarios: road, shortcut)
+#         bash scripts/drive.sh --map mud_road@shortcut --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview mud_road      Format: docs/en/MAPS.md
+world:
+  name: mud_road
+  description: Winding road through a clay field
+  tags: [surfaces, outdoor]
+  default_surface: clay_wet
+  bounds: {xmin: -7, xmax: 7, ymin: -5, ymax: 5}
+  resolution: 0.03
+  zones:
+    - {surface: gray, type: band, points: [[-6, -3], [-3, -3], [0, 0], [3, 3], [6, 3]], width: 1.2}
+  relief: []
+  robots: [jackal, husky, pioneer, robotino]
+  scenarios:
+    road: {route: [[-6, -3], [-3, -3], [0, 0], [3, 3], [6, 3]]}
+    shortcut: {spawn: [-6, -3, 26.565], traj: 'line:L=13.4'}

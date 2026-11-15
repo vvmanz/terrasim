@@ -1,0 +1,21 @@
+# marssim_fig15 — the sandy mound of the MarsSim Fig. 15 experiment (geometry as reconstructed: 0.8 m up,
+# 0.3 m top, 0.8 m down, 0.14 m high) on MarsSim soil (Table II).
+# The mound runs across the whole map. Speed as in the experiment: 0.019 m/s.
+# Run:    bash scripts/drive.sh --map marssim_fig15            (scenario 'fig15', the robots listed in robots:)
+#         bash scripts/drive.sh --map "marssim_fig15@*"         (all scenarios: fig15, fast)
+#         bash scripts/drive.sh --map marssim_fig15@fast --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview marssim_fig15      Format: docs/en/MAPS.md
+world:
+  name: marssim_fig15
+  description: MarsSim Fig. 15 mound on MarsSim soil
+  tags: [marssim, mound]
+  default_surface: mars_soil
+  bounds: {xmin: -3, xmax: 8, ymin: -2.5, ymax: 2.5}
+  resolution: 0.02
+  zones: []
+  relief:
+    - {type: mound, x_start: 1.5, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.14, smooth: 0.1, dir_deg: 0}
+  robots: [rover, husky, jackal]
+  scenarios:
+    fig15: {spawn: [0, 0, 0], traj: 'line:L=5', speed: 0.019, note: 'rover at the speed of the experiment'}
+    fast: {spawn: [0, 0, 0], traj: 'line:L=5', note: default speed of the robot}

@@ -1,0 +1,19 @@
+# slope_ladder — a 'ladder' of slopes: 2.5 m sections of 5, 10, 15, 20, 25, 30° in a row, rounded breaks.
+# One run shows at which slope the robot stops: terrain_slope_max_deg and climb_m in summary.csv.
+# Run:    bash scripts/drive.sh --map slope_ladder            (scenario 'up', the robots listed in robots:)
+#         bash scripts/drive.sh --map "slope_ladder@*"         (all scenarios: up)
+#         bash scripts/drive.sh --map slope_ladder@up --robot burger --engine harmonic --gui
+# Preview: python3 tools/maps.py preview slope_ladder      Format: docs/en/MAPS.md
+world:
+  name: slope_ladder
+  description: Slope grows in steps 5→30° every 2.5 m
+  tags: [slope, limit]
+  default_surface: gray
+  bounds: {xmin: -4, xmax: 18, ymin: -3, ymax: 3}
+  resolution: 0.05
+  zones: []
+  relief:
+    - {type: slopes, start: 0.0, blend: 0.6, then: flat, dir_deg: 0, segments: [{slope_deg: 5, length: 2.5}, {slope_deg: 10, length: 2.5}, {slope_deg: 15, length: 2.5}, {slope_deg: 20, length: 2.5}, {slope_deg: 25, length: 2.5}, {slope_deg: 30, length: 2.5}]}
+  robots: [burger, waffle, robotino, youbot, pioneer, jackal, husky, rover]
+  scenarios:
+    up: {spawn: [-2.5, 0, 0], traj: 'line:L=19', note: 'up, as long as grip and motors allow'}

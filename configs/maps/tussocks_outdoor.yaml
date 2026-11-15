@@ -1,0 +1,19 @@
+# tussocks_outdoor — staggered rows of tussocks: up to 10 cm high (40 % spread), radius 60 cm, 1.2 m pitch, LETE sand.
+# Run:    bash scripts/drive.sh --map tussocks_outdoor            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "tussocks_outdoor@*"         (all scenarios: across, slalom)
+#         bash scripts/drive.sh --map tussocks_outdoor@slalom --robot jackal --engine harmonic --gui
+# Preview: python3 tools/maps.py preview tussocks_outdoor      Format: docs/en/MAPS.md
+world:
+  name: tussocks_outdoor
+  description: Field of large tussocks up to 10 cm on sand
+  tags: [bumps, rows, outdoor]
+  default_surface: sand_lete
+  bounds: {xmin: -3, xmax: 14, ymin: -5, ymax: 5}
+  resolution: 0.03
+  zones: []
+  relief:
+    - {type: bump_rows, height: 0.1, radius: 0.6, pitch: 1.2, area: [0.0, 11.0, -4.5, 4.5], stagger: true, jitter: 0.4, seed: 2, dir_deg: 0}
+  robots: [jackal, husky, rover, pioneer]
+  scenarios:
+    across: {spawn: [-2, 0, 0], traj: 'line:L=14'}
+    slalom: {spawn: [-2, 0, 0], traj: 'slalom:L=13,A=1.5,n=2'}

@@ -1,0 +1,33 @@
+{
+ "_doc": "Your own surfaces for scripts/robotino.sh --surface-file examples/my_surfaces.json --surfaces linoleum_soft,rubber_tiles,gravel_like (or scripts/drive.sh --surface-file ...). 'base': take every parameter of an existing surface and change the listed ones. Meaning of the parameters: docs/en/SURFACES.md.",
+ "surfaces": {
+  "linoleum_soft": {
+   "base": "table",
+   "_doc": "soft linoleum: like the table, but the roller rubber grips PVC better (mu 0.8) and the covering is a little softer (roller losses x2)",
+   "mu": 0.8,
+   "f_lat": 0.012
+  },
+  "rubber_tiles": {
+   "base": "gray",
+   "_doc": "soft 20 mm rubber tiles (gym floor): friction and losses as the gray rubber mat + an elastic layer",
+   "kphi": 3.0e7,
+   "n": 1.0,
+   "b_contact": 0.03,
+   "layer": 0.02,
+   "rebound": 0.9,
+   "slip_norm": 1
+  },
+  "gravel_like": {
+   "base": "sand_lete",
+   "_doc": "rough example: dense sand with a large spread of properties (cv_soil 0.4) and a 10 cm heterogeneity scale",
+   "cv_soil": 0.4,
+   "cv_res": 0.2,
+   "corr_len": 0.10
+  }
+ },
+ "speeds": {
+  "linoleum_soft": [0.1, 0.2, 0.3],
+  "rubber_tiles": [0.1, 0.2, 0.3],
+  "gravel_like": [0.1, 0.2, 0.3]
+ }
+}

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "terrasim: wheel-terrain interaction for Gazebo Harmonic"
+abstract: "Research simulator of wheel-terrain interaction for wheeled mobile robots: Janosi traction, rolling losses, Bekker soft layers and heterogeneous surfaces, DC motors, encoders and IMU; a Gazebo Harmonic system plugin and an offline emulator sharing one header-only C++ core."
+type: software
+authors:
+  - family-names: "Manzarov"
+    given-names: "Vladimir Sergeevich"
+license: MIT
+version: "8.3"
+date-released: "2026-11-15"
+keywords:
+  - terramechanics
+  - wheeled robots
+  - Gazebo
+  - simulation
+  - slip
+  - Bekker

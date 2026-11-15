@@ -1,0 +1,20 @@
+# washboard — a 'washboard': 1 cm sine (2 cm peak to peak), 0.5 m wavelength, gray floor.
+# Body vibration, IMU accelerometer noise, wheel odometry errors.
+# Run:    bash scripts/drive.sh --map washboard            (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "washboard@*"         (all scenarios: across, circle)
+#         bash scripts/drive.sh --map washboard@circle --robot burger --engine harmonic --gui
+# Preview: python3 tools/maps.py preview washboard      Format: docs/en/MAPS.md
+world:
+  name: washboard
+  description: "Washboard: ±1 cm waves every 0.5 m"
+  tags: [bumps, rows, indoor, odometry]
+  default_surface: gray
+  bounds: {xmin: -2, xmax: 11, ymin: -2, ymax: 2}
+  resolution: 0.01
+  zones: []
+  relief:
+    - {type: waves, amplitude: 0.01, wavelength: 0.5, dir_deg: 0, from: 0.0, to: 8.0}
+  robots: [burger, robotino, waffle, jackal]
+  scenarios:
+    across: {spawn: [-1, 0, 0], traj: 'line:L=10'}
+    circle: {spawn: [4, -1.2, 0], traj: 'circle:R=1.2'}

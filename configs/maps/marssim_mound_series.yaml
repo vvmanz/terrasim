@@ -1,0 +1,23 @@
+# marssim_mound_series — five mounds of the Fig. 15 shape in a row, 7, 14, 21, 28, 35 cm high with the same slope length
+# (slope ≈ 5, 10, 15, 19, 24°), MarsSim soil (Table II). Where does the rover stop?
+# Run:    bash scripts/drive.sh --map marssim_mound_series            (scenario 'cross', the robots listed in robots:)
+#         bash scripts/drive.sh --map "marssim_mound_series@*"         (all scenarios: cross)
+#         bash scripts/drive.sh --map marssim_mound_series@cross --robot rover --engine harmonic --gui
+# Preview: python3 tools/maps.py preview marssim_mound_series      Format: docs/en/MAPS.md
+world:
+  name: marssim_mound_series
+  description: Series of Fig. 15 mounds of growing height (5→24°)
+  tags: [marssim, mound, limit]
+  default_surface: mars_soil
+  bounds: {xmin: -2, xmax: 17, ymin: -2.5, ymax: 2.5}
+  resolution: 0.02
+  zones: []
+  relief:
+    - {type: mound, x_start: 1.0, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.07, smooth: 0.1, dir_deg: 0}
+    - {type: mound, x_start: 4.0, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.14, smooth: 0.1, dir_deg: 0}
+    - {type: mound, x_start: 7.0, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.21, smooth: 0.1, dir_deg: 0}
+    - {type: mound, x_start: 10.0, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.28, smooth: 0.1, dir_deg: 0}
+    - {type: mound, x_start: 13.0, L_up: 0.8, L_top: 0.3, L_down: 0.8, height: 0.35, smooth: 0.1, dir_deg: 0}
+  robots: [rover, husky, jackal]
+  scenarios:
+    cross: {spawn: [-1, 0, 0], traj: 'line:L=16', note: over all mounds}

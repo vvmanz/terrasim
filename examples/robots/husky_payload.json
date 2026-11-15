@@ -1,0 +1,17 @@
+{
+ "_doc": "Example of a robot derived from a built-in one: a Husky with a 20 kg payload, a lower gear ratio and a longer tyre patch (made-up example). 'base' takes every parameter of the built-in robot; the keys below replace its values (dictionaries such as motor are merged key by key; 'wheel' changes every wheel).",
+ "base": "husky",
+ "mass": 70.0,
+ "com": [
+  0.0,
+  0.0,
+  0.3
+ ],
+ "motor": {
+  "gear": 50.0
+ },
+ "wheel": {
+  "patch": 0.1
+ },
+ "speed": 0.8
+}

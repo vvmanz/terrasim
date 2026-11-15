@@ -1,0 +1,19 @@
+# rollover — a 55° slope with a flat strip at its foot and a plateau on top, gray rubber floor.
+# across — along the slope (the robot rolls down sideways); up — straight up (it flips over backwards or stops).
+# Run:    bash scripts/drive.sh --map rollover --on-tip continue      (scenario 'across', the robots listed in robots:)
+#         bash scripts/drive.sh --map "rollover@*" --on-tip continue  (all scenarios: across, up)
+# With the default --on-tip stop a run ends 0.2 s after the chassis tilts more than --tip-deg (50°) to the ground.
+# Preview: python3 tools/maps.py preview rollover              Format: docs/en/MAPS.md
+world:
+  name: rollover
+  description: "55° slope for rollover tests (use --on-tip continue)"
+  tags: [slope, rollover]
+  default_surface: gray
+  bounds: {xmin: -5, xmax: 5, ymin: -4, ymax: 5}
+  resolution: 0.02
+  relief:
+    - {type: ramp, slope_deg: 55, from: 0.0, to: 2.0, blend: 0.25, dir_deg: 90}
+  robots: [husky, jackal]
+  scenarios:
+    across: {spawn: [-3, 1.0, 0], traj: "line:L=6", speed: 0.5, note: 'along the slope: rolls down sideways'}
+    up: {spawn: [0, -2.5, 90], traj: "line:L=5", speed: 0.5, note: 'straight up: flips over backwards or stops'}

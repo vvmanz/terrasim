@@ -1,0 +1,29 @@
+# surface_ladder — 1.5 m strips of every library surface in order of growing resistance, from the table to wet clay.
+# Where the robot gets stuck; currents and slips on every surface: per_surface.csv.
+# Run:    bash scripts/drive.sh --map surface_ladder            (scenario 'cross', the robots listed in robots:)
+#         bash scripts/drive.sh --map "surface_ladder@*"         (all scenarios: cross)
+#         bash scripts/drive.sh --map surface_ladder@cross --robot robotino --engine harmonic --gui
+# Preview: python3 tools/maps.py preview surface_ladder      Format: docs/en/MAPS.md
+world:
+  name: surface_ladder
+  description: Strips of all surfaces from the table to clay
+  tags: [surfaces, limit]
+  default_surface: table
+  bounds: {xmin: -2, xmax: 18, ymin: -2, ymax: 2}
+  resolution: 0.02
+  zones:
+    - {surface: table, type: rect, xmin: 0.0, xmax: 1.5, ymin: -2, ymax: 2}
+    - {surface: red, type: rect, xmin: 1.5, xmax: 3.0, ymin: -2, ymax: 2}
+    - {surface: foam, type: rect, xmin: 3.0, xmax: 4.5, ymin: -2, ymax: 2}
+    - {surface: gray, type: rect, xmin: 4.5, xmax: 6.0, ymin: -2, ymax: 2}
+    - {surface: carpet, type: rect, xmin: 6.0, xmax: 7.5, ymin: -2, ymax: 2}
+    - {surface: green, type: rect, xmin: 7.5, xmax: 9.0, ymin: -2, ymax: 2}
+    - {surface: carpet_shag, type: rect, xmin: 9.0, xmax: 10.5, ymin: -2, ymax: 2}
+    - {surface: sand_lete, type: rect, xmin: 10.5, xmax: 12.0, ymin: -2, ymax: 2}
+    - {surface: sandy_loam, type: rect, xmin: 12.0, xmax: 13.5, ymin: -2, ymax: 2}
+    - {surface: mars_soil, type: rect, xmin: 13.5, xmax: 15.0, ymin: -2, ymax: 2}
+    - {surface: clay_wet, type: rect, xmin: 15.0, xmax: 16.5, ymin: -2, ymax: 2}
+  relief: []
+  robots: [robotino, burger, youbot, pioneer, jackal, husky, rover]
+  scenarios:
+    cross: {spawn: [-1, 0, 0], traj: 'line:L=18'}

@@ -1,0 +1,92 @@
+{
+ "_doc": "Example robot file: a small four-wheel skid-steer robot (made-up numbers). Run it as it is: bash scripts/drive.sh --robot examples/robots/my_skidsteer.json; or copy it to configs/robots/<name>.json and use --robot <name>. Every key: docs/en/ROBOTS.md. Units: SI (m, kg, kg m^2, Ohm, V s/rad, N m/A).",
+ "mass": 12.0,
+ "com": [
+  0.0,
+  0.0,
+  0.1
+ ],
+ "I": [
+  0.12,
+  0.2,
+  0.25
+ ],
+ "Jw": 0.02,
+ "size": [
+  0.45,
+  0.35,
+  0.15
+ ],
+ "wheel_mass": 0.4,
+ "drive": [
+  "diff"
+ ],
+ "odom_yaw_scale": 0.7,
+ "encoder_ticks": 2048,
+ "speed": 0.5,
+ "accel": 0.8,
+ "v_max": 1.2,
+ "w_max": 3.0,
+ "map_size": 5.0,
+ "map_res": 0.03,
+ "wheels": [
+  {
+   "label": "FL",
+   "x": 0.15,
+   "y": 0.2,
+   "r": 0.08,
+   "b": 0.05,
+   "patch": 0.03,
+   "type": "standard",
+   "group": 0
+  },
+  {
+   "label": "RL",
+   "x": -0.15,
+   "y": 0.2,
+   "r": 0.08,
+   "b": 0.05,
+   "patch": 0.03,
+   "type": "standard",
+   "group": 0
+  },
+  {
+   "label": "FR",
+   "x": 0.15,
+   "y": -0.2,
+   "r": 0.08,
+   "b": 0.05,
+   "patch": 0.03,
+   "type": "standard",
+   "group": 1
+  },
+  {
+   "label": "RR",
+   "x": -0.15,
+   "y": -0.2,
+   "r": 0.08,
+   "b": 0.05,
+   "patch": 0.03,
+   "type": "standard",
+   "group": 1
+  }
+ ],
+ "motor": {
+  "R": 0.6,
+  "Ce": 0.03,
+  "kt": 0.03,
+  "gear": 30.0,
+  "eta": 0.8,
+  "I0": 0.3,
+  "Vmax": 24.0,
+  "kp": 0.1,
+  "ki": 1.0
+ },
+ "ctrl": {
+  "kp_xy": 1.0,
+  "k_yaw": 1.5,
+  "kx": 1.0,
+  "ky": 6.0,
+  "kth": 3.0
+ }
+}
