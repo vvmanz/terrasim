@@ -1,6 +1,6 @@
 # terrasim
 
-**Wheel–terrain interaction (terramechanics) for Gazebo Harmonic: traction and slip, sinkage, motor currents and
+**Wheel-terrain interaction (terramechanics) for Gazebo Harmonic: traction and slip, sinkage, motor currents and
 energy of wheeled robots on floors and soils.**
 
 English | [Русский](README.ru.md)
