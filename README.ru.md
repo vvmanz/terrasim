@@ -131,11 +131,6 @@ python3 tools/drive_validate.py      # режим vehicle воспроизвод
 bash scripts/drive_examples.sh       # 9 примеров в эмуляторе
 ```
 
-## Как цитировать
-
-Если вы используете terrasim в исследованиях, пожалуйста, цитируйте его (см. [`CITATION.cff`](CITATION.cff); на GitHub
-есть кнопка «Cite this repository»). Журнальная статья с описанием модели и её проверки готовится.
-
 ## Лицензия
 
 MIT, см. [`LICENSE`](LICENSE). Меши роботов в `models/meshes/` сохраняют лицензии своих источников
