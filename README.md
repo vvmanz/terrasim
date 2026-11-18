@@ -128,10 +128,6 @@ python3 tools/drive_validate.py      # the vehicle mode reproduces the Robotino 
 bash scripts/drive_examples.sh       # 9 example studies in the emulator
 ```
 
-## Citing
-
-If you use terrasim in your research, please cite it (see [`CITATION.cff`](CITATION.cff); GitHub shows a
-"Cite this repository" button). A journal paper describing the model and its validation is in preparation.
 
 ## Licence
 
